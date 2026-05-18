@@ -90,3 +90,6 @@ tmp/
 # === Package managers ===
 .yarn-integrity
 .pnpm-store
+
+# == VS Code == 
+.vscode
