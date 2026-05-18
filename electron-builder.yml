@@ -1,0 +1,79 @@
+appId: com.wijewardana.lanvault
+productName: LANVault
+copyright: Copyright © 2026 udwije
+
+directories:
+  output: dist
+
+files:
+  - main.js
+  - preload.js
+  - renderer/**/*
+  - assets/**/*
+  - node_modules/**/*
+
+# ── Windows ──
+win:
+  icon: assets/icon.ico
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - arm64
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: LANVault
+  installerHeaderIcon: assets/icon.ico
+  deleteAppDataOnUninstall: false   # keep user data on uninstall
+
+# ── macOS ──
+mac:
+  icon: assets/icon.icns
+  category: public.app-category.utilities
+  darkModeSupport: true
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+    - target: zip
+      arch:
+        - x64
+        - arm64
+
+dmg:
+  title: LANVault ${version}
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+
+# ── Linux ──
+linux:
+  icon: assets/icon.png
+  category: Network
+  description: Network Infrastructure Manager for SMEs
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+    - target: rpm
+      arch:
+        - x64
+
+# ── Auto-updater (ready for future use) ── 
+# Uncomment and set your publish target when ready:
+# publish:
+#   provider: github
+#   owner: your-github-username
+#   repo: netvisor
