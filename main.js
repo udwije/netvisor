@@ -39,7 +39,7 @@ function createWindow() {
     height: bounds.height,
     minWidth: 900,
     minHeight: 600,
-    title: 'NetVisor',
+    title: 'LANVault',
     icon: getAppIcon(),
     backgroundColor: '#0B1120',
     webPreferences: {
@@ -53,6 +53,7 @@ function createWindow() {
   });
 
   mainWindow.loadFile(path.join(__dirname, 'renderer', 'index.html'));
+  mainWindow.removeMenu();
 
   // Show window once fully loaded (avoids white flash)
   mainWindow.once('ready-to-show', () => {
@@ -72,7 +73,7 @@ function createWindow() {
     if (!isQuitting && store.get('minimizeToTray')) {
       e.preventDefault();
       mainWindow.hide();
-      showTrayNotification('NetVisor', 'NetVisor is still running in the system tray.');
+      showTrayNotification('LANVault', 'LANVault is still running in the system tray.');
     }
   });
 
@@ -91,11 +92,11 @@ function createWindow() {
 function createTray() {
   const icon = getAppIcon();
   tray = new Tray(icon);
-  tray.setToolTip('NetVisor — Infrastructure Manager');
+  tray.setToolTip('LANVault — Infrastructure Manager');
 
   const contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Open NetVisor',
+      label: 'Open LANVault',
       click: () => {
         if (mainWindow) {
           mainWindow.show();
@@ -125,7 +126,7 @@ function createTray() {
     },
     { type: 'separator' },
     {
-      label: 'Quit NetVisor',
+      label: 'Quit LANVault',
       click: () => {
         isQuitting = true;
         app.quit();
@@ -202,8 +203,8 @@ ipcMain.handle('fs:writeFile', async (_event, filePath, content) => {
 // Open file picker dialog
 ipcMain.handle('dialog:openFile', async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
-    title: 'Open NetVisor Database',
-    filters: [{ name: 'NetVisor Database', extensions: ['json'] }],
+    title: 'Open LANVault Database',
+    filters: [{ name: 'LANVault Database', extensions: ['json'] }],
     properties: ['openFile'],
   });
   if (result.canceled || !result.filePaths.length) return { canceled: true };
@@ -213,9 +214,9 @@ ipcMain.handle('dialog:openFile', async () => {
 // Save file picker dialog
 ipcMain.handle('dialog:saveFile', async (_event, suggestedName) => {
   const result = await dialog.showSaveDialog(mainWindow, {
-    title: 'Create NetVisor Database',
-    defaultPath: suggestedName || 'netvisor-database.json',
-    filters: [{ name: 'NetVisor Database', extensions: ['json'] }],
+    title: 'Create LANVault Database',
+    defaultPath: suggestedName || 'lanvault-database.json',
+    filters: [{ name: 'LANVault Database', extensions: ['json'] }],
   });
   if (result.canceled) return { canceled: true };
   return { canceled: false, filePath: result.filePath };
@@ -224,8 +225,8 @@ ipcMain.handle('dialog:saveFile', async (_event, suggestedName) => {
 // Export JSON dialog (plain backup)
 ipcMain.handle('dialog:exportJson', async (_event, suggestedName) => {
   const result = await dialog.showSaveDialog(mainWindow, {
-    title: 'Export NetVisor Backup',
-    defaultPath: suggestedName || 'netvisor-backup.json',
+    title: 'Export LANVault Backup',
+    defaultPath: suggestedName || 'lanvault-backup.json',
     filters: [{ name: 'JSON File', extensions: ['json'] }],
   });
   if (result.canceled) return { canceled: true };
@@ -235,7 +236,7 @@ ipcMain.handle('dialog:exportJson', async (_event, suggestedName) => {
 // Import JSON dialog
 ipcMain.handle('dialog:importJson', async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
-    title: 'Import NetVisor Backup',
+    title: 'Import LANVault Backup',
     filters: [{ name: 'JSON File', extensions: ['json'] }],
     properties: ['openFile'],
   });
