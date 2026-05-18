@@ -19,8 +19,13 @@ No cloud subscription. No SaaS. No data leaving your premises.
 
 ## Screenshots
 
-> _<img width="1916" height="1027" alt="image" src="https://github.com/user-attachments/assets/63128149-eaa2-4fe2-b7c6-c749d6465f98" />
-_
+> _<img width="1916" height="1027" alt="image" src="https://github.com/user-attachments/assets/63128149-eaa2-4fe2-b7c6-c749d6465f98" _/>
+<img width="1920" height="1030" alt="Screenshot (40)" src="https://github.com/user-attachments/assets/59374fe5-572f-4d42-8c7a-6e251e5e8ef4" />
+<img width="1920" height="1022" alt="Screenshot (39)" src="https://github.com/user-attachments/assets/88d7991c-344a-4558-b818-37121fda8a79" />
+<img width="1920" height="1022" alt="Screenshot (38)" src="https://github.com/user-attachments/assets/18aac1a4-d1ac-436c-b4b4-382f5eab08b3" />
+<img width="1920" height="1022" alt="Screenshot (35)" src="https://github.com/user-attachments/assets/5f24af08-a5df-4178-9dc9-0a8ab3cb9692" />
+<img width="1920" height="1030" alt="Screenshot (32)" src="https://github.com/user-attachments/assets/a50d4246-a518-4d38-a994-eeb3b34c4cea" />
+<img width="1920" height="1030" alt="Screenshot (34)" src="https://github.com/user-attachments/assets/f3788cca-f394-49b3-b31c-22e7619f4061" />
 
 ---
 
@@ -54,6 +59,8 @@ Port counts are not just a number — they reflect real hardware. When adding a 
 - Fully **custom** mode lets you define any combination for unlisted models.
 
 ### 🗺️ Port Map View
+> ⚠️ **Beta:** Port map is functional but visual polish is still in progress. A full UI redesign is planned for v1.1.
+
 Visual front-panel representation of every switch, firewall, router, and distribution device:
 
 - Each port renders as a physical port tile, colour-coded by connection type (Access / Uplink / Trunk / DMZ / WAN).
@@ -97,6 +104,8 @@ Per-device interface rows with full detail:
 - Connected Device fields use a dropdown populated from your live inventory — no more copy-pasting hostnames.
 
 ### 📦 Firmware Tracker
+> ⚠️ **Beta:** Firmware version tracking is manual entry only in this release. Automated version checking against vendor sources is on the roadmap.
+
 Firmware lifecycle management across all devices:
 
 - Log current firmware version per device.
@@ -127,7 +136,6 @@ Full dark and light theme with consistent colour semantics across all views, bad
 
 - **Node.js 18 or later** — [nodejs.org](https://nodejs.org)
 - **npm** (bundled with Node.js)
-- **Git** (to clone the repo)
 
 ---
 
@@ -135,7 +143,7 @@ Full dark and light theme with consistent colour semantics across all views, bad
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/lanvault.git
+git clone https://github.com/udwije/LANVault.git
 cd lanvault
 
 # 2. Install dependencies
@@ -231,6 +239,8 @@ The database file is portable — copy it to a USB drive or network share and op
 
 ## Known Limitations (Beta)
 
+- **Port Map visuals** — functional but UI polish is ongoing. Full redesign planned for v1.1.
+- **Firmware version checking** — manual entry only in this release. Automated checks against vendor sources are on the roadmap.
 - **No cloud sync** — intentional; bring your own file sync (Syncthing, OneDrive, SMB share).
 - **No auto-update** — updates require replacing the app manually during this beta phase.
 - **Single file concurrency** — simultaneous writes from two open instances of the app will cause the last write to win. For shared use, open the file from a network share one user at a time, or stagger writes.
@@ -239,18 +249,6 @@ The database file is portable — copy it to a USB drive or network share and op
 
 ---
 
-## Roadmap
-
-- [ ] Auto-update via GitHub Releases (`electron-updater`)
-- [ ] CSV / Excel export for device inventory and VLAN tables
-- [ ] PDF report generation (network summary, port map, firmware status)
-- [ ] IP address management (IPAM) with subnet calculator
-- [ ] Scheduled firmware reminder notifications
-- [ ] Read-only guest accounts
-- [ ] Dark/light theme auto-detection from OS preference
-- [ ] Bulk import from CSV
-
----
 
 ## Frequently Asked Questions
 
@@ -270,6 +268,12 @@ No. LANVault makes zero network calls. All data stays in the file on your disk.
 Yes. Unsigned Electron apps trigger Gatekeeper on macOS. Right-click the app and choose "Open" to bypass the warning on first launch. Future releases will be signed with an Apple Developer certificate.
 
 ---
+
+## License
+
+Copyright 2026 — Released under the [Apache License 2.0](LICENSE).
+
+You are free to use, modify, and distribute this software under the terms of the Apache 2.0 licence. See the [LICENSE](LICENSE) file for the full text.
 
 ---
 
