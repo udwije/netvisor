@@ -4,7 +4,7 @@
 
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue)
 ![Electron](https://img.shields.io/badge/built%20with-Electron%2029-47848F?logo=electron)
-![License](https://img.shields.io/badge/license-Private%20Beta-orange)
+![License](https://img.shields.io/badge/license-N/A%20Beta-orange)
 ![Status](https://img.shields.io/badge/status-Beta%20Testing-yellow)
 
 ---
