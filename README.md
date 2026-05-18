@@ -138,6 +138,54 @@ Full dark and light theme with consistent colour semantics across all views, bad
 - **npm** (bundled with Node.js)
 
 ---
+## Downloads
+
+Prebuilt installers are available from the GitHub Releases page:
+
+👉 https://github.com/udwije/lanvault/releases
+
+### Available Packages
+
+| Platform | Package |
+|---|---|
+| Windows | `.exe` installer |
+| Linux | `.AppImage`, `.deb`, `.rpm` |
+
+---
+
+## Quick Start
+
+### Download Latest Release
+
+1. Open the Releases page
+2. Download the latest installer for your platform
+3. Install and launch LANVault
+
+### Windows
+
+Download:
+
+```text
+lanvault_vx.x.x.exe
+```
+
+Then:
+- Run installer
+- Launch LANVault
+- Create or open an encrypted database
+
+---
+
+### Linux
+
+Download one of:
+
+- `.AppImage`
+- `.deb`
+- `.rpm`
+depending on your distribution.
+
+---
 
 ## Getting Started
 
