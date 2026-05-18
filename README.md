@@ -4,7 +4,7 @@
 
 ![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-blue)
 ![Electron](https://img.shields.io/badge/built%20with-Electron%2029-47848F?logo=electron)
-![License](https://img.shields.io/badge/license-N/A%20Beta-orange)
+![License](https://img.shields.io/badge/license-Apache2.0%20Beta-orange)
 ![Status](https://img.shields.io/badge/status-Beta%20Testing-yellow)
 
 ---
@@ -19,7 +19,8 @@ No cloud subscription. No SaaS. No data leaving your premises.
 
 ## Screenshots
 
-> _Add screenshots here once you have them — dashboard, port map, topology, add-device modal._
+> _<img width="1916" height="1027" alt="image" src="https://github.com/user-attachments/assets/63128149-eaa2-4fe2-b7c6-c749d6465f98" />
+_
 
 ---
 
