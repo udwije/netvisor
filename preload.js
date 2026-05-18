@@ -7,7 +7,7 @@
 
 const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld('netvisorAPI', {
+contextBridge.exposeInMainWorld('lanvaultAPI', {
 
   // ── File system ──
 

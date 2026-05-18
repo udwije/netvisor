@@ -1,13 +1,13 @@
 {
   "name": "lanvault",
   "version": "1.0.0",
-  "description": "LANVault — Network Infrastructure Manager for SMEs",
+  "description": "LANVault - Network Infrastructure Manager for SMEs",
   "main": "main.js",
   "author": {
-    "name": "Your Name or Company",
-    "email": "your@email.com"
+    "name": "udwije",
+    "email": "udwije@wijewardana.com"
   },
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "private": true,
   "scripts": {
     "start": "electron .",
@@ -26,9 +26,9 @@
     "electron-builder": "^26.8.1"
   },
   "build": {
-    "appId": "com.yourcompany.lanvault",
+    "appId": "com.wijewardana.lanvault",
     "productName": "LANVault",
-    "copyright": "Copyright © 2025 Your Company",
+    "copyright": "Copyright © 2026 udwije",
     "directories": {
       "output": "dist"
     },

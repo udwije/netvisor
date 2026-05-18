@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetVisor — Network Infrastructure Manager</title>
+    <title>LANVault — Network Infrastructure Manager</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <!-- Phosphor icons loaded via CSS only -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
@@ -1042,7 +1042,7 @@
             <div class="login-logo">
                 <div class="login-logo-icon"><i class="ph ph-globe-hemisphere-west"></i></div>
                 <div>
-                    <div class="login-logo-text">NetVisor</div>
+                    <div class="login-logo-text">LANVault</div>
                     <div class="login-logo-sub">Infrastructure Manager</div>
                 </div>
             </div>
@@ -1050,7 +1050,7 @@
             <!-- Step 1: Pick or create database file -->
             <div class="login-step active" id="loginStep1">
                 <div class="login-step-title">Open Your Database</div>
-                <div class="login-step-sub">Select your encrypted NetVisor database file to continue, or create a new one.</div>
+                <div class="login-step-sub">Select your encrypted LANVault database file to continue, or create a new one.</div>
                 <div id="loginStep1Error" class="login-error"></div>
                 <button class="login-btn" onclick="authPickFile()">
                     <i class="ph ph-folder-open"></i>Open Database File
@@ -1153,7 +1153,7 @@
             <div class="logo">
                 <div class="logo-icon"><i class="ph ph-globe-hemisphere-west"></i></div>
                 <div class="logo-text-wrap">
-                    <div class="logo-text brand-glow">NetVisor</div>
+                    <div class="logo-text brand-glow">LANVault</div>
                     <div class="logo-sub">Infrastructure Manager</div>
                 </div>
             </div>
@@ -1952,7 +1952,7 @@ let editingVlanIndex = null;
    All data is encrypted with AES-256-GCM.
    The database file structure (unencrypted wrapper):
    {
-     "netvisor": true,
+     "lanvault": true,
      "version": 1,
      "users": [
        { "username": "Alice", "salt": "<hex>", "iv": "<hex>", "data": "<base64 ciphertext>" }
@@ -1964,7 +1964,7 @@ let editingVlanIndex = null;
 ================================================================ */
 
 let authFileHandle  = null;   // File System Access API handle
-let authDbWrapper   = null;   // Full parsed { netvisor, version, users[] }
+let authDbWrapper   = null;   // Full parsed { lanvault, version, users[] }
 let authCurrentUser = null;   // { username, key (CryptoKey) }
 let authNewDb       = false;  // true when creating a brand-new file
 
@@ -2024,14 +2024,14 @@ function hexToBytes(hex) {
 
 async function authReadFile() {
     if (!authFileHandle) return null;
-    const result = await window.netvisorAPI.readFile(authFileHandle);
+    const result = await window.lanvaultAPI.readFile(authFileHandle);
     if (!result.ok) throw new Error(result.error);
     return JSON.parse(result.data);
 }
 
 async function authWriteFile(wrapper) {
     if (!authFileHandle) return;
-    const result = await window.netvisorAPI.writeFile(authFileHandle, JSON.stringify(wrapper, null, 2));
+    const result = await window.lanvaultAPI.writeFile(authFileHandle, JSON.stringify(wrapper, null, 2));
     if (!result.ok) throw new Error(result.error);
 }
 
@@ -2063,7 +2063,7 @@ function setLoginLoading(loading) {
 
 async function authPickFile() {
     try {
-        const result = await window.netvisorAPI.openDbDialog();
+        const result = await window.lanvaultAPI.openDbDialog();
         if (result.canceled) return;
         await authOpenPath(result.filePath);
     } catch(e) {
@@ -2080,19 +2080,19 @@ async function authOpenPath(filePath) {
     try {
         wrapper = await authReadFile();
     } catch(e) {
-        showLoginError(1, 'Could not read the file. Make sure it is a valid NetVisor database.');
+        showLoginError(1, 'Could not read the file. Make sure it is a valid LANVault database.');
         authFileHandle = null;
         return;
     }
 
-    if (!wrapper || !wrapper.netvisor || !Array.isArray(wrapper.users)) {
-        showLoginError(1, 'This does not appear to be a NetVisor database file.');
+    if (!wrapper || !wrapper.lanvault || !Array.isArray(wrapper.users)) {
+        showLoginError(1, 'This does not appear to be a LANVault database file.');
         authFileHandle = null;
         return;
     }
 
     authDbWrapper = wrapper;
-    await window.netvisorAPI.setLastDb(filePath);
+    await window.lanvaultAPI.setLastDb(filePath);
 
     if (wrapper.users.length === 0) {
         authNewDb = true;
@@ -2107,14 +2107,14 @@ async function authOpenPath(filePath) {
 
 async function authCreateFile() {
     try {
-        const result = await window.netvisorAPI.saveDbDialog('netvisor-database.json');
+        const result = await window.lanvaultAPI.saveDbDialog('lanvault-database.json');
         if (result.canceled) return;
         authFileHandle = result.filePath;
         authNewDb = true;
 
-        authDbWrapper = { netvisor: true, version: 1, users: [] };
+        authDbWrapper = { lanvault: true, version: 1, users: [] };
         await authWriteFile(authDbWrapper);
-        await window.netvisorAPI.setLastDb(result.filePath);
+        await window.lanvaultAPI.setLastDb(result.filePath);
 
         goToStep(4);
     } catch(e) {
@@ -2254,7 +2254,7 @@ function authLogout() {
     inventory = { devices: [], vlans: [], auditLogs: [], firmwarePolicies: {}, lastUpdated: new Date().toISOString() };
     authFileHandle = null;
     authDbWrapper = null;
-    if (window.netvisorAPI) window.netvisorAPI.clearLastDb();
+    if (window.lanvaultAPI) window.lanvaultAPI.clearLastDb();
     document.getElementById('loginScreen').classList.remove('hidden');
     goToStep(1);
     updateSyncStatus('disconnected', 'Not signed in');
@@ -3118,7 +3118,7 @@ function initValidation() {
 
 /* ===== THEME SYSTEM ===== */
 function initTheme() {
-    var saved = localStorage.getItem('netvisor_theme');
+    var saved = localStorage.getItem('lanvault_theme');
     var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     var theme = saved || (prefersDark ? 'dark' : 'light');
     applyTheme(theme);
@@ -3134,7 +3134,7 @@ function applyTheme(theme) {
     if (label) {
         label.textContent = theme === 'dark' ? 'Light' : 'Dark';
     }
-    localStorage.setItem('netvisor_theme', theme);
+    localStorage.setItem('lanvault_theme', theme);
 }
 
 function toggleTheme() {
@@ -4460,13 +4460,13 @@ function filterVlansBySwitch(switchName) {
 
 async function exportData() {
     const dataStr = JSON.stringify(inventory, null, 2);
-    const suggestedName = 'netvisor-backup-' + new Date().toISOString().split('T')[0] + '.json';
+    const suggestedName = 'lanvault-backup-' + new Date().toISOString().split('T')[0] + '.json';
 
-    if (window.netvisorAPI) {
+    if (window.lanvaultAPI) {
         // Electron: use native save dialog
-        const result = await window.netvisorAPI.exportJsonDialog(suggestedName);
+        const result = await window.lanvaultAPI.exportJsonDialog(suggestedName);
         if (result.canceled) return;
-        const writeResult = await window.netvisorAPI.writeFile(result.filePath, dataStr);
+        const writeResult = await window.lanvaultAPI.writeFile(result.filePath, dataStr);
         if (!writeResult.ok) { showToast('Export failed: ' + writeResult.error, 'error'); return; }
         showToast('Exported to ' + result.filePath, 'success');
     } else {
@@ -4484,11 +4484,11 @@ async function exportData() {
 }
 
 async function importData(input) {
-    if (window.netvisorAPI) {
+    if (window.lanvaultAPI) {
         // Electron: use native open dialog
-        const result = await window.netvisorAPI.importJsonDialog();
+        const result = await window.lanvaultAPI.importJsonDialog();
         if (result.canceled) return;
-        const readResult = await window.netvisorAPI.readFile(result.filePath);
+        const readResult = await window.lanvaultAPI.readFile(result.filePath);
         if (!readResult.ok) { showToast('Could not read file: ' + readResult.error, 'error'); return; }
         try {
             const data = JSON.parse(readResult.data);
@@ -4540,8 +4540,8 @@ function showToast(message, type) {
     container.appendChild(toast);
     setTimeout(() => { toast.remove(); }, 4000);
     // Also send desktop notification for errors and warnings when app may be in background
-    if (window.netvisorAPI && (type === 'error' || type === 'warning')) {
-        window.netvisorAPI.notify('NetVisor ' + (type === 'error' ? 'Error' : 'Warning'), message);
+    if (window.lanvaultAPI && (type === 'error' || type === 'warning')) {
+        window.lanvaultAPI.notify('LANVault ' + (type === 'error' ? 'Error' : 'Warning'), message);
     }
 }
 
@@ -4570,19 +4570,19 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
 
     // Apply saved theme to login screen too
-    const savedTheme = localStorage.getItem('netvisor_theme');
+    const savedTheme = localStorage.getItem('lanvault_theme');
     if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
 
     // Electron: show app version in sidebar footer
-    if (window.netvisorAPI) {
-        const version = await window.netvisorAPI.getVersion();
+    if (window.lanvaultAPI) {
+        const version = await window.lanvaultAPI.getVersion();
         const verEl = document.getElementById('appVersion');
         if (verEl) verEl.textContent = 'v' + version;
     }
 
     // Electron: auto-open last used database so user only needs to enter password
-    if (window.netvisorAPI) {
-        const lastDb = await window.netvisorAPI.getLastDb();
+    if (window.lanvaultAPI) {
+        const lastDb = await window.lanvaultAPI.getLastDb();
         if (lastDb) {
             // Update step 1 UI to show the remembered file
             const sub = document.querySelector('#loginStep1 .login-step-sub');
@@ -4797,10 +4797,10 @@ function addAuditLog(action, category, target, details, severity, changes, metad
 
 function getSessionId() {
     try {
-        let sid = sessionStorage.getItem('netvisor_session_id');
+        let sid = sessionStorage.getItem('lanvault_session_id');
         if (!sid) {
             sid = 'sess-' + Date.now() + '-' + Math.random().toString(36).substr(2, 8);
-            sessionStorage.setItem('netvisor_session_id', sid);
+            sessionStorage.setItem('lanvault_session_id', sid);
         }
         return sid;
     } catch (e) {
